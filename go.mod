@@ -1,4 +1,4 @@
-module gofy
+module github.com/varun-singhh/gofy
 
 go 1.20
 
