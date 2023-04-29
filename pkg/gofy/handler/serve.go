@@ -3,8 +3,8 @@ package handler
 import (
 	"encoding/json"
 	"github.com/gookit/color"
+	"github.com/varun-singhh/gofy/pkg/gofy/types"
 	"go.opencensus.io/trace"
-	"gofy/pkg/types"
 	"log"
 	"net/http"
 	"os"
