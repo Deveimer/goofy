@@ -63,13 +63,13 @@ func (k *logger) log(level level, format string, args ...interface{}) {
 
 	if args != nil {
 		if format != "" {
-			s += "\n\t[DATA]:" + fmt.Sprintf(format, args)
+			s += fmt.Sprintf(format, args)
 		} else {
-			s += fmt.Sprintf("\n\t[DATA]: %v", args)
+			s += fmt.Sprint(args)
 		}
 	}
 
-	fmt.Println(s)
+	fmt.Fprint(k.out, s)
 }
 
 func (k *logger) Log(args ...interface{}) {
