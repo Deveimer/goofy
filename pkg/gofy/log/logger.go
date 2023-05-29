@@ -23,7 +23,7 @@ func newLogger() *logger {
 
 	name := os.Getenv("APP_NAME")
 	if name == "" {
-		name = "gofr-app"
+		name = "gofy-app"
 	}
 
 	version := os.Getenv("APP_VERSION")
@@ -55,18 +55,18 @@ func (k *logger) log(level level, format string, args ...interface{}) {
 		return
 	}
 
-	appInfo := k.app.getAppData()
+	_ = k.app.getAppData()
 
 	levelColor := level.colorCode()
 
 	s := fmt.Sprintf("\u001B[%dm%s\u001B[0m [%s] ", levelColor, level.String()[0:4], time.Now())
 
-	s += fmt.Sprintf("[APPINFO]: %v", appInfo)
-
-	if format != "" {
-		s += " [DATA]: " + fmt.Sprintf(format, args)
-	} else {
-		s += fmt.Sprintf("[DATA]: %v", args)
+	if args != nil {
+		if format != "" {
+			s += "\n\t[DATA]:" + fmt.Sprintf(format, args)
+		} else {
+			s += fmt.Sprintf("\n\t[DATA]: %v", args)
+		}
 	}
 
 	fmt.Println(s)

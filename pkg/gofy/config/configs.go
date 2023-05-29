@@ -34,7 +34,7 @@ func NewGoDotEnvProvider(l logger, configFolder string) *GoDotEnvProvider {
 func (g *GoDotEnvProvider) readConfig(confLocation string) {
 	defaultFile := confLocation + "/.env"
 
-	env := os.Getenv("GOFR_ENV")
+	env := os.Getenv("GOFY_ENV")
 	if env == "" {
 		env = "local"
 	}
