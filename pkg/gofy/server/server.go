@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"github.com/varun-singhh/gofy/pkg/gofy/log"
 	"github.com/varun-singhh/gofy/pkg/gofy/router"
 	"net/http"
@@ -28,8 +27,6 @@ func NewServer() *Server {
 }
 
 func (s *Server) Start(logger log.Logger) {
-
-	logger.Log(fmt.Sprint(s.Router))
 
 	var srv *http.Server
 
