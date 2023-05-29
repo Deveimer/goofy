@@ -69,6 +69,8 @@ func (k *logger) log(level level, format string, args ...interface{}) {
 		}
 	}
 
+	s += "\n"
+
 	fmt.Fprint(k.out, s)
 }
 

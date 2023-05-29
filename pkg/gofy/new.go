@@ -1,12 +1,11 @@
 package gofy
 
 import (
-	"os"
-	"strconv"
-
 	"github.com/varun-singhh/gofy/pkg/gofy/config"
 	"github.com/varun-singhh/gofy/pkg/gofy/log"
 	"github.com/varun-singhh/gofy/pkg/gofy/server"
+	"os"
+	"strconv"
 )
 
 func New() (k *Gofy) {
