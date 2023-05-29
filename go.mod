@@ -4,6 +4,8 @@ go 1.20
 
 require (
 	github.com/gookit/color v1.5.3
+	github.com/gorilla/mux v1.8.0
+	github.com/joho/godotenv v1.5.1
 	go.opencensus.io v0.24.0
 )
 

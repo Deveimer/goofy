@@ -3,7 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"github.com/gookit/color"
-	"github.com/varun-singhh/gofy/pkg/gofy/types"
+	"github.com/varun-singhh/gofy/pkg/gofy/errors"
 	"go.opencensus.io/trace"
 	"log"
 	"net/http"
@@ -12,7 +12,7 @@ import (
 
 type Handler func(r *http.Request) (interface{}, error)
 
-func (h Handler) HandleHTTP(w http.ResponseWriter, r *http.Request) {
+func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	traceId := trace.FromContext(r.Context()).SpanContext().TraceID.String()
 	data, err := h(r)
 	var res Response
@@ -21,13 +21,13 @@ func (h Handler) HandleHTTP(w http.ResponseWriter, r *http.Request) {
 	case nil:
 		res = Response{http.StatusOK, "SUCCESS", data}
 
-	case types.MissingParam, types.InvalidParam:
+	case errors.MissingParam, errors.InvalidParam:
 		res = Response{http.StatusBadRequest, "ERROR", ErrorData{traceId, t, t.Error()}}
 
-	case types.EntityNotFound:
+	case errors.EntityNotFound:
 		res = Response{http.StatusNotFound, "ERROR", ErrorData{traceId, t, t.Error()}}
 
-	case types.Response:
+	case errors.Response:
 		res = Response{Code: t.StatusCode, Status: "ERROR", Data: ErrorData{Id: traceId, Details: t, Message: t.Error()}}
 
 	default:

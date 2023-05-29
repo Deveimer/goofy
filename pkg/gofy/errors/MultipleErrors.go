@@ -1,4 +1,4 @@
-package types
+package errors
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 
 type MultipleErrors struct {
 	StatusCode int     `json:"-" xml:"-"`
-	Errors     []error `json:"types" xml:"types"`
+	Errors     []error `json:"errors" xml:"errors"`
 }
 
 func (m MultipleErrors) Error() string {
