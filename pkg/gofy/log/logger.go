@@ -68,6 +68,8 @@ func (k *logger) log(level level, format string, args ...interface{}) {
 	} else {
 		s += fmt.Sprintf("[DATA]: %v", args)
 	}
+
+	fmt.Println(s)
 }
 
 func (k *logger) Log(args ...interface{}) {
