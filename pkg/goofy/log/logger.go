@@ -23,7 +23,7 @@ func newLogger() *logger {
 
 	name := os.Getenv("APP_NAME")
 	if name == "" {
-		name = "gofy-app"
+		name = "goofy-app"
 	}
 
 	version := os.Getenv("APP_VERSION")
@@ -34,7 +34,7 @@ func newLogger() *logger {
 	l.app = appInfo{
 		Name:      name,
 		Version:   version,
-		Framework: "gofy-dev",
+		Framework: "goofy-dev",
 		Data:      make(map[string]interface{}),
 		syncData:  &sync.Map{},
 	}

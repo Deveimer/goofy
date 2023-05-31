@@ -1,30 +1,29 @@
-package gofy
+package goofy
 
 import (
-	"github.com/varun-singhh/gofy/pkg/gofy/config"
-	"github.com/varun-singhh/gofy/pkg/gofy/log"
-	"github.com/varun-singhh/gofy/pkg/gofy/server"
+	"github.com/varun-singhh/gofy/pkg/goofy/config"
+	"github.com/varun-singhh/gofy/pkg/goofy/log"
 	"os"
 	"strconv"
 )
 
-func New() (k *Gofy) {
+func New() (k *Goofy) {
 	logger := log.NewLogger()
 
 	return NewWithConfig(config.NewGoDotEnvProvider(logger, getConfigFolder()))
 }
 
-func NewWithConfig(c config.Config) (k *Gofy) {
+func NewWithConfig(c config.Config) (k *Goofy) {
 	// Here we do things based on what is provided by Config
 	logger := log.NewLogger()
 
-	gofy := &Gofy{
+	goofy := &Goofy{
 		Logger: logger,
 		Config: c,
 	}
 
-	s := server.NewServer()
-	gofy.Server = s
+	s := NewServer(goofy)
+	goofy.Server = s
 
 	// HTTP PORT
 	p, err := strconv.Atoi(c.Get("HTTP_PORT"))
@@ -34,7 +33,7 @@ func NewWithConfig(c config.Config) (k *Gofy) {
 		s.HTTP.Port = 8000
 	}
 
-	return gofy
+	return goofy
 }
 
 func getConfigFolder() (configFolder string) {

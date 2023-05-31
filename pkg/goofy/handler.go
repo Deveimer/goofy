@@ -1,20 +1,20 @@
-package handler
+package goofy
 
 import (
 	"encoding/json"
-	"github.com/gookit/color"
-	"github.com/varun-singhh/gofy/pkg/gofy/errors"
-	"go.opencensus.io/trace"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/gookit/color"
+	"github.com/varun-singhh/gofy/pkg/goofy/errors"
 )
 
-type Handler func(r *http.Request) (interface{}, error)
+type Handler func(ctx *Context) (interface{}, error)
 
 func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	traceId := trace.FromContext(r.Context()).SpanContext().TraceID.String()
-	data, err := h(r)
+	c, _ := r.Context().Value(1).(*Context)
+	data, err := h(c)
 	var res Response
 	switch t := err.(type) {
 
@@ -22,24 +22,24 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		res = Response{http.StatusOK, "SUCCESS", data}
 
 	case errors.MissingParam, errors.InvalidParam:
-		res = Response{http.StatusBadRequest, "ERROR", ErrorData{traceId, t, t.Error()}}
+		res = Response{http.StatusBadRequest, "ERROR", ErrorData{t, t.Error()}}
 
 	case errors.EntityNotFound:
-		res = Response{http.StatusNotFound, "ERROR", ErrorData{traceId, t, t.Error()}}
+		res = Response{http.StatusNotFound, "ERROR", ErrorData{t, t.Error()}}
 
 	case errors.Response:
-		res = Response{Code: t.StatusCode, Status: "ERROR", Data: ErrorData{Id: traceId, Details: t, Message: t.Error()}}
+		res = Response{Code: t.StatusCode, Status: "ERROR", Data: ErrorData{Details: t, Message: t.Error()}}
 
 	default:
 		// This is unexpected error. So this will always be 500.
 		logger := log.New(os.Stderr, color.Red.Render("[ERR] "), 0)
-		line, _ := json.Marshal(ErrorData{traceId, t, t.Error()})
+		line, _ := json.Marshal(ErrorData{t, t.Error()})
 		logger.Println(string(line))
 
-		res = Response{http.StatusInternalServerError, "ERROR", ErrorData{traceId, nil, "Internal Server Error"}}
+		res = Response{http.StatusInternalServerError, "ERROR", ErrorData{nil, "Internal Server Error"}}
 	}
 
-	w.Header().Set("hes-x-trace", traceId)
+	w.Header().Set("content-type", "application/json")
 	w.WriteHeader(res.Code)
 	_ = json.NewEncoder(w).Encode(res)
 
@@ -52,7 +52,6 @@ type Response struct {
 }
 
 type ErrorData struct {
-	Id      string      `json:"id"`
 	Details interface{} `json:"details,omitempty"`
 	Message string      `json:"message"`
 }

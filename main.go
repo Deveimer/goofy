@@ -1,19 +1,24 @@
 package main
 
 import (
-	"github.com/varun-singhh/gofy/pkg/gofy"
-	"net/http"
+	"fmt"
+	"github.com/varun-singhh/gofy/pkg/goofy"
+	"github.com/varun-singhh/gofy/pkg/goofy/errors"
 )
 
 func main() {
 
-	app := gofy.New()
+	app := goofy.New()
 
 	// POST endpoints
-	app.Server.HTTP.Port = 2222
 
-	app.GET("/hi", func(r *http.Request) (interface{}, error) {
-		return "hello", nil
+	app.GET("/hi", func(ctx *goofy.Context) (interface{}, error) {
+		fmt.Println(ctx.Request().URL)
+		return errors.Response{
+			StatusCode: 500,
+			Status:     "Internal server error",
+			Code:       "500",
+		}, nil
 	})
 
 	app.Start()
