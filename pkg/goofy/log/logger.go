@@ -59,13 +59,13 @@ func (k *logger) log(level level, format string, args ...interface{}) {
 
 	levelColor := level.colorCode()
 
-	s := fmt.Sprintf("\u001B[%dm%s\u001B[0m [%s] ", levelColor, level.String()[0:4], time.Now())
+	s := fmt.Sprintf("\u001B[%dm%s\u001B[0m [%s] ", levelColor, level.String()[0:4], time.Now().Format("2006-01-02 15:04:05"))
 
 	if args != nil {
 		if format != "" {
-			s += fmt.Sprintf(format, args)
+			s += fmt.Sprintf(format, args...)
 		} else {
-			s += fmt.Sprint(args)
+			s += fmt.Sprint(args...)
 		}
 	}
 

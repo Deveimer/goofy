@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/varun-singhh/gofy/pkg/goofy/errors"
+	"github.com/varun-singhh/gofy/pkg/goofy/types"
 	"net/http"
 	"strings"
 )
@@ -60,7 +61,19 @@ func (h HTTP) Response(data interface{}, err error) {
 		statusCode int
 	)
 
-	response = data
+	res, okay := data.(*types.Response)
+	if res == nil {
+		res = &types.Response{}
+	}
+
+	if !okay {
+		response = data
+		statusCode = getStatusCode(h.method, data, err)
+	} else {
+		response = res.Data
+		statusCode = getStatusCode(h.method, res.Data, err)
+	}
+
 	statusCode = getStatusCode(h.method, data, err)
 
 	h.processResponse(statusCode, response)

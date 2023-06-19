@@ -2,12 +2,8 @@ package goofy
 
 import (
 	"encoding/json"
-	"log"
-	"net/http"
-	"os"
-
-	"github.com/gookit/color"
 	"github.com/varun-singhh/gofy/pkg/goofy/errors"
+	"net/http"
 )
 
 type Handler func(ctx *Context) (interface{}, error)
@@ -21,7 +17,7 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	case nil:
 		res = Response{http.StatusOK, "SUCCESS", data}
 
-	case errors.MissingParam, errors.InvalidParam:
+	case errors.MissingParam, errors.InvalidParam, errors.EntityAlreadyExists:
 		res = Response{http.StatusBadRequest, "ERROR", ErrorData{t, t.Error()}}
 
 	case errors.EntityNotFound:
@@ -31,11 +27,6 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		res = Response{Code: t.StatusCode, Status: "ERROR", Data: ErrorData{Details: t, Message: t.Error()}}
 
 	default:
-		// This is unexpected error. So this will always be 500.
-		logger := log.New(os.Stderr, color.Red.Render("[ERR] "), 0)
-		line, _ := json.Marshal(ErrorData{t, t.Error()})
-		logger.Println(string(line))
-
 		res = Response{http.StatusInternalServerError, "ERROR", ErrorData{nil, "Internal Server Error"}}
 	}
 

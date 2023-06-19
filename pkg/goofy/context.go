@@ -12,9 +12,10 @@ import (
 
 func NewContext(w response.Responder, r request.Request, k *Goofy) *Context {
 	return &Context{
-		req:   r,
-		res:   w,
-		Goofy: k,
+		req:    r,
+		res:    w,
+		Goofy:  k,
+		Logger: log.NewLogger(),
 	}
 }
 
