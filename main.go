@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/varun-singhh/gofy/pkg/goofy"
+	"github.com/Deveimer/gofy/pkg/goofy"
 )
 
 func main() {
