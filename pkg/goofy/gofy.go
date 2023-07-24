@@ -4,14 +4,17 @@ import (
 	"net/http"
 	"strings"
 
+	"gorm.io/gorm"
+
 	"github.com/varun-singhh/gofy/pkg/goofy/config"
 	"github.com/varun-singhh/gofy/pkg/goofy/log"
 )
 
 type Goofy struct {
-	Config config.Config
-	Logger log.Logger
-	Server *Server
+	Config   config.Config
+	Logger   log.Logger
+	Server   *Server
+	Database *gorm.DB
 }
 
 func (k *Goofy) Start() {
