@@ -22,6 +22,9 @@ func NewWithConfig(c config.Config) (k *Goofy) {
 	logger := log.NewLogger()
 
 	db := connectPostgresDB(c, logger)
+	if db == nil {
+		return nil
+	}
 
 	goofy := &Goofy{
 		Logger:   logger,
