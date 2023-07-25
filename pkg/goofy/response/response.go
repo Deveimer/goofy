@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
-	"github.com/Deveimer/gofy/pkg/goofy/errors"
-	"github.com/Deveimer/gofy/pkg/goofy/types"
 	"github.com/gorilla/mux"
+	"github.com/varun-singhh/gofy/pkg/goofy/errors"
+	"github.com/varun-singhh/gofy/pkg/goofy/types"
 	"net/http"
 	"strings"
 )
