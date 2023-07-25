@@ -2,7 +2,7 @@ package goofy
 
 import (
 	"encoding/json"
-	"github.com/Deveimer/gofy/pkg/goofy/errors"
+	"github.com/Deveimer/goofy/pkg/goofy/errors"
 	"net/http"
 )
 

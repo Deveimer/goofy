@@ -6,8 +6,8 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/Deveimer/gofy/pkg/goofy/config"
-	"github.com/Deveimer/gofy/pkg/goofy/log"
+	"github.com/Deveimer/goofy/pkg/goofy/config"
+	"github.com/Deveimer/goofy/pkg/goofy/log"
 )
 
 type Goofy struct {

@@ -2,9 +2,9 @@ package goofy
 
 import (
 	"context"
-	"github.com/Deveimer/gofy/pkg/goofy/log"
-	"github.com/Deveimer/gofy/pkg/goofy/request"
-	"github.com/Deveimer/gofy/pkg/goofy/response"
+	"github.com/Deveimer/goofy/pkg/goofy/log"
+	"github.com/Deveimer/goofy/pkg/goofy/request"
+	"github.com/Deveimer/goofy/pkg/goofy/response"
 	"net/http"
 	"strconv"
 	"sync"

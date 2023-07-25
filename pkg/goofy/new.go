@@ -7,8 +7,8 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
-	"github.com/Deveimer/gofy/pkg/goofy/config"
-	"github.com/Deveimer/gofy/pkg/goofy/log"
+	"github.com/Deveimer/goofy/pkg/goofy/config"
+	"github.com/Deveimer/goofy/pkg/goofy/log"
 )
 
 func New() (k *Goofy) {
