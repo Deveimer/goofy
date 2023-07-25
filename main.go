@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/Deveimer/gofy/pkg/goofy"
+	"github.com/Deveimer/goofy/pkg/goofy"
 )
 
 func main() {
