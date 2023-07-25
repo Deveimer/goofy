@@ -1,4 +1,4 @@
-module github.com/Deveimer/gofy
+module github.com/Deveimer/goofy
 
 go 1.20
 
