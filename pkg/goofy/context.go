@@ -2,10 +2,10 @@ package goofy
 
 import (
 	"context"
+	"github.com/Deveimer/gofy/pkg/goofy/log"
+	"github.com/Deveimer/gofy/pkg/goofy/request"
+	"github.com/Deveimer/gofy/pkg/goofy/response"
 	"github.com/gorilla/mux"
-	"github.com/varun-singhh/gofy/pkg/goofy/log"
-	"github.com/varun-singhh/gofy/pkg/goofy/request"
-	"github.com/varun-singhh/gofy/pkg/goofy/response"
 	"net/http"
 	"sync"
 )
