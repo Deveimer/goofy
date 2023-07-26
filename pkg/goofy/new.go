@@ -63,7 +63,7 @@ func connectPostgresDB(c config.Config, logger log.Logger) *sql.DB {
 	root := c.Get("DB_ROOT")
 	port := c.Get("DAB_PORT")
 
-	dsn := "host=" + host + " user=" + root + " password=" + pass + " dbname=" + name + " port=" + port
+	dsn := "host=" + host + " user=" + root + " password=" + pass + " dbname=" + name + " port=" + port + "sslmode=require"
 	db, err := sql.Open("postgres", dsn)
 	if err != nil {
 		logger.Errorf("Error while connecting to DB, Error is %v", err)
