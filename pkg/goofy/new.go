@@ -1,14 +1,12 @@
 package goofy
 
 import (
-	"os"
-	"strconv"
-
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
-
+	"database/sql"
 	"github.com/Deveimer/goofy/pkg/goofy/config"
 	"github.com/Deveimer/goofy/pkg/goofy/log"
+	_ "github.com/lib/pq"
+	"os"
+	"strconv"
 )
 
 func New() (k *Goofy) {
@@ -58,7 +56,7 @@ func getConfigFolder() (configFolder string) {
 	return
 }
 
-func connectPostgresDB(c config.Config, logger log.Logger) *gorm.DB {
+func connectPostgresDB(c config.Config, logger log.Logger) *sql.DB {
 	host := c.Get("DB_HOST")
 	name := c.Get("DB_NAME")
 	pass := c.Get("DB_PASSWORD")
@@ -66,7 +64,7 @@ func connectPostgresDB(c config.Config, logger log.Logger) *gorm.DB {
 	port := c.Get("DAB_PORT")
 
 	dsn := "host=" + host + " user=" + root + " password=" + pass + " dbname=" + name + " port=" + port
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := sql.Open("postgres", dsn)
 	if err != nil {
 		logger.Errorf("Error while connecting to DB, Error is %v", err)
 

@@ -1,10 +1,9 @@
 package goofy
 
 import (
+	"database/sql"
 	"net/http"
 	"strings"
-
-	"gorm.io/gorm"
 
 	"github.com/Deveimer/goofy/pkg/goofy/config"
 	"github.com/Deveimer/goofy/pkg/goofy/log"
@@ -14,7 +13,7 @@ type Goofy struct {
 	Config   config.Config
 	Logger   log.Logger
 	Server   *Server
-	Database *gorm.DB
+	Database *sql.DB
 }
 
 func (k *Goofy) Start() {
