@@ -31,7 +31,7 @@ func (c *Context) Reset(w response.Responder, r request.Request) {
 	c.req = r
 	c.res = w
 	c.Context = nil
-	c.Logger = nil
+	c.Logger = log.NewLogger()
 }
 
 func (c *Context) Request() *http.Request {
