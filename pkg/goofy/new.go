@@ -19,7 +19,7 @@ func NewWithConfig(c config.Config) (k *Goofy) {
 	// Here we do things based on what is provided by Config
 	logger := log.NewLogger()
 
-	db := connectPostgresDB(c, logger)
+	db := connectPostgresDB(c, logger, c.Get("PG_SSL"))
 	if db == nil {
 		return nil
 	}
@@ -56,14 +56,18 @@ func getConfigFolder() (configFolder string) {
 	return
 }
 
-func connectPostgresDB(c config.Config, logger log.Logger) *sql.DB {
+func connectPostgresDB(c config.Config, logger log.Logger, sslRequired string) *sql.DB {
 	host := c.Get("DB_HOST")
 	name := c.Get("DB_NAME")
 	pass := c.Get("DB_PASSWORD")
 	root := c.Get("DB_ROOT")
 	port := c.Get("DAB_PORT")
 
-	dsn := "host=" + host + " user=" + root + " password=" + pass + " dbname=" + name + " port=" + port + " sslmode=require"
+	dsn := "host=" + host + " user=" + root + " password=" + pass + " dbname=" + name + " port=" + port
+	if sslRequired != "ENABLE" {
+		dsn = dsn + " sslmode=disable"
+	}
+
 	db, err := sql.Open("postgres", dsn)
 	if err != nil {
 		logger.Errorf("Error while connecting to DB, Error is %v", err)
