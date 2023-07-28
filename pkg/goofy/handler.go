@@ -15,7 +15,11 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	switch t := err.(type) {
 
 	case nil:
-		res = Response{Code: http.StatusOK, Status: "SUCCESS", Data: data}
+		status := http.StatusOK
+		if r.Method == "DELETE" {
+			status = http.StatusNoContent
+		}
+		res = Response{Code: status, Status: "SUCCESS", Data: data}
 
 	case errors.MissingParam, errors.InvalidParam, errors.EntityAlreadyExists:
 		res = Response{Code: http.StatusBadRequest, Status: "ERROR", Error: ErrorData{t, t.Error()}}
