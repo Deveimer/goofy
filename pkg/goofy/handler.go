@@ -15,19 +15,19 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	switch t := err.(type) {
 
 	case nil:
-		res = Response{http.StatusOK, "SUCCESS", data}
+		res = Response{Code: http.StatusOK, Status: "SUCCESS", Data: data}
 
 	case errors.MissingParam, errors.InvalidParam, errors.EntityAlreadyExists:
-		res = Response{http.StatusBadRequest, "ERROR", ErrorData{t, t.Error()}}
+		res = Response{Code: http.StatusBadRequest, Status: "ERROR", Error: ErrorData{t, t.Error()}}
 
 	case errors.EntityNotFound:
-		res = Response{http.StatusNotFound, "ERROR", ErrorData{t, t.Error()}}
+		res = Response{Code: http.StatusNotFound, Status: "ERROR", Error: ErrorData{t, t.Error()}}
 
 	case errors.Response:
 		res = Response{Code: t.StatusCode, Status: "ERROR", Data: ErrorData{Details: t, Message: t.Error()}}
 
 	default:
-		res = Response{http.StatusInternalServerError, "ERROR", ErrorData{nil, "Internal Server Error"}}
+		res = Response{Code: http.StatusInternalServerError, Status: "ERROR", Error: ErrorData{nil, "Internal Server Error"}}
 	}
 
 	w.Header().Set("content-type", "application/json")
@@ -40,6 +40,7 @@ type Response struct {
 	Code   int         `json:"code"`
 	Status string      `json:"status"`
 	Data   interface{} `json:"data,omitempty"`
+	Error  interface{} `json:"error,omitempty"`
 }
 
 type ErrorData struct {
