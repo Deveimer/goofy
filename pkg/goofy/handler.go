@@ -22,13 +22,13 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		res = Response{Code: status, Status: "SUCCESS", Data: data}
 
 	case errors.MissingParam, errors.InvalidParam, errors.EntityAlreadyExists:
-		res = Response{Code: http.StatusBadRequest, Status: "ERROR", Error: ErrorData{t, t.Error()}}
+		res = Response{Code: http.StatusBadRequest, Status: "ERROR", Error: ErrorData{Message: t.Error()}}
 
 	case errors.EntityNotFound:
-		res = Response{Code: http.StatusNotFound, Status: "ERROR", Error: ErrorData{t, t.Error()}}
+		res = Response{Code: http.StatusNotFound, Status: "ERROR", Error: ErrorData{Message: t.Error()}}
 
 	case errors.Response:
-		res = Response{Code: t.StatusCode, Status: "ERROR", Data: ErrorData{Details: t, Message: t.Error()}}
+		res = Response{Code: t.StatusCode, Status: "ERROR", Error: ErrorData{Details: t, Message: t.Error()}}
 
 	default:
 		res = Response{Code: http.StatusInternalServerError, Status: "ERROR", Error: ErrorData{nil, "Internal Server Error"}}
